@@ -1292,6 +1292,11 @@ body {
   color: var(--dark);
   font-size: clamp(26px, 3.5vw, 40px);
   margin-bottom: 36px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .cta-card .section-title { white-space: normal; }
 }
 
 .cta-card .section-desc {
@@ -1396,6 +1401,10 @@ body {
 }
 
 /* Scroll progress */
+/* Hide mobile-only elements on desktop */
+.swipe-hint { display: none; }
+.testimonial-dots { display: none; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: 1fr; }
@@ -1906,11 +1915,11 @@ body {
       </div>
     </div>
   </div>
-  <div class="swipe-hint" id="swipeHint" style="display: none;">
+  <div class="swipe-hint" id="swipeHint">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     Swipen
   </div>
-  <div class="testimonial-dots hidden" id="testimonialDots" style="display: none;"></div>
+  <div class="testimonial-dots hidden" id="testimonialDots"></div>
 </section>
 <!-- CTA -->
 <section class="section cta-section" id="kontakt">
@@ -1928,7 +1937,7 @@ body {
   </div>
   <div class="cta-card reveal">
     <div class="section-label" style="justify-content: center;">Jetzt loslegen</div>
-    <h2 class="section-title" style="white-space: nowrap;">Lassen Sie uns über <span class="marker-highlight">Ihr Projekt</span> sprechen.</h2>
+    <h2 class="section-title cta-title">Lassen Sie uns über <span class="marker-highlight">Ihr Projekt</span> sprechen.</h2>
     <p class="section-desc">Ein kurzes Gespräch reicht, damit wir Ihnen sagen können, was bei Ihrem Projekt realistisch ist, was es kostet und wie der Zeitplan aussieht. Wir freuen uns, Sie kennenzulernen!</p>
     <a href="tel:+497361669126" class="btn-main" style="display: inline-flex;">
       Jetzt anrufen
@@ -1941,7 +1950,7 @@ body {
       </div>
       <div class="cta-contact-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <a href="/cdn-cgi/l/email-protection#b0d8dfc2dcd2d5d3db9dd2d1c5f0c49ddfdedcd9ded59ed4d5" style="color: inherit; text-decoration: none;"><span class="__cf_email__" data-cfemail="c7afa8b5aba5a2a4aceaa5a6b287b3eaa8a9abaea9a2e9a3a2">[email&#160;protected]</span></a>
+        <a href="mailto:horlbeck-bau@t-online.de" style="color: inherit; text-decoration: none;">horlbeck-bau@t-online.de</a>
       </div>
       <div class="cta-contact-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1976,7 +1985,7 @@ body {
     <div class="footer-col">
       <h4>Kontakt</h4>
       <a href="tel:+497361669126">07361 66912</a>
-      <a href="/cdn-cgi/l/email-protection#fd95928f919f989e96d09f9c88bd89d0929391949398d39998">E-Mail schreiben</a>
+      <a href="mailto:horlbeck-bau@t-online.de">E-Mail schreiben</a>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
     </div>
@@ -1991,7 +2000,7 @@ body {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ===== PARTICLES =====
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
