@@ -1578,10 +1578,10 @@ body {
 
 /* Scroll progress */
 /* Hide mobile-only elements on desktop */
-.swipe-hint { display: none; color: #111111; font-weight: 700; }
+.swipe-hint { display: none; color: #000000 !important; font-weight: 800; }
 .testimonial-dots { display: none; }
-.testimonial-dot { background: rgba(0, 0, 0, 0.35); }
-.testimonial-dot.active { background: #FFE21C; box-shadow: 0 0 8px rgba(255, 226, 28, 0.5); }
+.testimonial-dot { background: #999999 !important; }
+.testimonial-dot.active { background: #FFE21C !important; box-shadow: 0 0 10px rgba(255, 226, 28, 0.6); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
@@ -1658,9 +1658,9 @@ body {
     justify-content: center;
     gap: 8px;
     padding: 16px 0 4px;
-    color: #111111;
-    font-size: 14px;
-    font-weight: 700;
+    color: #000000 !important;
+    font-size: 15px;
+    font-weight: 800;
     transition: opacity 0.5s, transform 0.5s;
     opacity: 1;
   }
@@ -1674,6 +1674,7 @@ body {
   }
   .swipe-hint svg {
     animation: swipeArrow 1.2s ease-in-out infinite;
+    stroke: #000000 !important;
   }
   @keyframes swipeArrow {
     0%, 100% { transform: translateX(0); }
@@ -1684,7 +1685,7 @@ body {
   .testimonial-dots {
     display: flex !important;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     padding: 16px 0 4px;
     transition: opacity 0.5s, transform 0.5s;
     opacity: 0;
@@ -1704,13 +1705,13 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.35);
+    background: #999999 !important;
     transition: all 0.3s;
   }
   .testimonial-dot.active {
-    background: #FFE21C;
+    background: #FFE21C !important;
     transform: scale(1.4);
-    box-shadow: 0 0 8px rgba(255, 226, 28, 0.5);
+    box-shadow: 0 0 10px rgba(255, 226, 28, 0.6);
   }
 
   /* Process steps: compact on mobile */
