@@ -1722,7 +1722,8 @@ body {
   .process-step p { font-size: 13px; }
 
   .cta-card { padding: 48px 24px; }
-  .cta-contact { gap: 16px; }
+  .cta-contact { gap: 12px; flex-direction: column; align-items: center; }
+  .cta-contact-item { white-space: nowrap; }
 
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -2090,11 +2091,15 @@ body {
       </div>
     </div>
   </div>
-  <div class="swipe-hint" id="swipeHint" style="color: #000; font-weight: 800;">
+  <style>
+    @keyframes swipeArrowMove { 0%,100%{transform:translateX(0)} 50%{transform:translateX(8px)} }
+    #swipeHint svg { animation: swipeArrowMove 1.2s ease-in-out infinite; }
+  </style>
+  <div id="swipeHint" style="display:none; align-items:center; justify-content:center; gap:8px; padding:8px 0 4px; color:#000000; font-size:15px; font-weight:800; font-family:'Inter',sans-serif;">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     Swipen
   </div>
-  <div class="testimonial-dots" id="testimonialDots"></div>
+  <div id="testimonialDots" style="display:none; justify-content:center; gap:10px; padding:8px 0 4px;"></div>
 </section>
 
 <noscript><style>.swipe-hint{display:none!important}</style></noscript>
@@ -2175,10 +2180,6 @@ body {
     </div>
 
     <div class="cta-contact">
-      <div class="cta-contact-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <a href="tel:+49736166912" style="color: inherit; text-decoration: none;">07361 66912</a>
-      </div>
       <div class="cta-contact-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         <a href="mailto:horlbeck-bau@t-online.de" style="color: inherit; text-decoration: none;">horlbeck-bau@t-online.de</a>
@@ -2509,48 +2510,41 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (!cards.length || !hint || !dotsContainer) return;
 
-  // Force hint styling
-  hint.style.color = '#000000';
-  hint.style.fontWeight = '800';
-  hint.style.fontSize = '15px';
-  hint.style.opacity = '1';
-  var hintSvg = hint.querySelector('svg');
-  if (hintSvg) hintSvg.style.stroke = '#000000';
+  // Show hint
+  hint.style.display = 'flex';
 
   // Build dots
   for (var i = 0; i < cards.length; i++) {
     var dot = document.createElement('div');
-    dot.className = 'testimonial-dot';
     dot.style.width = '12px';
     dot.style.height = '12px';
     dot.style.borderRadius = '50%';
-    dot.style.transition = 'all 0.3s';
     dot.style.display = 'inline-block';
+    dot.style.transition = 'all 0.3s';
     if (i === 0) {
-      dot.classList.add('active');
       dot.style.background = '#FFD700';
       dot.style.transform = 'scale(1.4)';
-      dot.style.boxShadow = '0 0 12px rgba(255, 215, 0, 0.8)';
+      dot.style.boxShadow = '0 0 12px rgba(255,215,0,0.8)';
+      dot.setAttribute('data-active', 'true');
     } else {
-      dot.style.background = '#444444';
+      dot.style.background = '#555555';
+      dot.setAttribute('data-active', 'false');
     }
     dotsContainer.appendChild(dot);
   }
 
-  var dots = dotsContainer.querySelectorAll('.testimonial-dot');
+  var dots = dotsContainer.children;
   var switched = false;
   var startIndex = 0;
 
   function updateDots(idx) {
     for (var j = 0; j < dots.length; j++) {
       if (j === idx) {
-        dots[j].classList.add('active');
         dots[j].style.background = '#FFD700';
         dots[j].style.transform = 'scale(1.4)';
-        dots[j].style.boxShadow = '0 0 12px rgba(255, 215, 0, 0.8)';
+        dots[j].style.boxShadow = '0 0 12px rgba(255,215,0,0.8)';
       } else {
-        dots[j].classList.remove('active');
-        dots[j].style.background = '#444444';
+        dots[j].style.background = '#555555';
         dots[j].style.transform = 'scale(1)';
         dots[j].style.boxShadow = 'none';
       }
@@ -2569,15 +2563,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!switched && idx !== startIndex) {
       switched = true;
       hint.style.opacity = '0';
-      hint.style.transform = 'translateY(-10px)';
+      hint.style.transition = 'opacity 0.4s';
       setTimeout(function() {
         hint.style.display = 'none';
-        dotsContainer.style.opacity = '1';
-        dotsContainer.style.transform = 'translateY(0)';
-        dotsContainer.style.height = 'auto';
-        dotsContainer.style.padding = '8px 0 4px';
-        dotsContainer.style.overflow = 'visible';
-      }, 300);
+        dotsContainer.style.display = 'flex';
+      }, 400);
     }
   }
 
