@@ -2273,13 +2273,7 @@ function animateParticles() {
 
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 226, 28, ${currentOpacity})`;
-    ctx.fill();
-
-    // Glow
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 226, 28, ${currentOpacity * 0.25})`;
+    ctx.fillStyle = `rgba(255, 226, 28, ${currentOpacity * 0.7})`;
     ctx.fill();
   });
   requestAnimationFrame(animateParticles);
@@ -2515,17 +2509,53 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (!cards.length || !hint || !dotsContainer) return;
 
+  // Force hint styling
+  hint.style.color = '#000000';
+  hint.style.fontWeight = '800';
+  hint.style.fontSize = '15px';
+  hint.style.opacity = '1';
+  var hintSvg = hint.querySelector('svg');
+  if (hintSvg) hintSvg.style.stroke = '#000000';
+
   // Build dots
   for (var i = 0; i < cards.length; i++) {
     var dot = document.createElement('div');
     dot.className = 'testimonial-dot';
-    if (i === 0) dot.className += ' active';
+    dot.style.width = '10px';
+    dot.style.height = '10px';
+    dot.style.borderRadius = '50%';
+    dot.style.transition = 'all 0.3s';
+    dot.style.display = 'inline-block';
+    if (i === 0) {
+      dot.classList.add('active');
+      dot.style.background = '#FFE21C';
+      dot.style.transform = 'scale(1.4)';
+      dot.style.boxShadow = '0 0 10px rgba(255, 226, 28, 0.6)';
+    } else {
+      dot.style.background = '#999999';
+    }
     dotsContainer.appendChild(dot);
   }
 
   var dots = dotsContainer.querySelectorAll('.testimonial-dot');
   var switched = false;
   var startIndex = 0;
+
+  function updateDots(idx) {
+    for (var j = 0; j < dots.length; j++) {
+      if (j === idx) {
+        dots[j].classList.add('active');
+        dots[j].style.background = '#FFE21C';
+        dots[j].style.transform = 'scale(1.4)';
+        dots[j].style.boxShadow = '0 0 10px rgba(255, 226, 28, 0.6)';
+      } else {
+        dots[j].classList.remove('active');
+        dots[j].style.background = '#999999';
+        dots[j].style.transform = 'scale(1)';
+        dots[j].style.boxShadow = 'none';
+      }
+    }
+  }
 
   function onScroll() {
     var sl = track.scrollLeft;
@@ -2534,16 +2564,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (idx < 0) idx = 0;
     if (idx >= cards.length) idx = cards.length - 1;
 
-    for (var j = 0; j < dots.length; j++) {
-      if (j === idx) dots[j].classList.add('active');
-      else dots[j].classList.remove('active');
-    }
+    updateDots(idx);
 
     if (!switched && idx !== startIndex) {
       switched = true;
-      hint.classList.add('hidden');
+      hint.style.opacity = '0';
+      hint.style.transform = 'translateY(-10px)';
       setTimeout(function() {
-        dotsContainer.classList.add('visible');
+        hint.style.display = 'none';
+        dotsContainer.style.opacity = '1';
+        dotsContainer.style.transform = 'translateY(0)';
+        dotsContainer.style.height = 'auto';
+        dotsContainer.style.padding = '16px 0 4px';
+        dotsContainer.style.overflow = 'visible';
       }, 300);
     }
   }
