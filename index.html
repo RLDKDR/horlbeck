@@ -10,6 +10,11 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://horlbeck-bau.de/">
 
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Horlbeck Bau- und Solarservice | Aalen">
@@ -18,6 +23,7 @@
 <meta property="og:locale" content="de_DE">
 <meta property="og:site_name" content="Horlbeck Bau- und Solarservice">
 <meta property="og:image" content="https://horlbeck-bau.de/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Horlbeck Bau- und Solarservice in Aalen: Dachsanierung, Photovoltaik und Gartengestaltung">
@@ -34,7 +40,7 @@
   "name": "Horlbeck Bau- und Solarservice",
   "description": "Handwerksbetrieb für Dachsanierung, Photovoltaik und Gartengestaltung in Aalen und auf der Ostalb.",
   "url": "https://horlbeck-bau.de/",
-  "telephone": "+497361669120",
+  "telephone": "+49736166912",
   "email": "horlbeck-bau@t-online.de",
   "address": {
     "@type": "PostalAddress",
@@ -277,8 +283,6 @@ body {
   overflow: hidden;
 }
 
-/* Grid lines removed for cleaner look */
-
 /* Solar panel overlay */
 .hero-solar-bg {
   position: absolute;
@@ -486,10 +490,11 @@ body {
   overflow: hidden;
   aspect-ratio: 16 / 9.5;
   position: relative;
-  filter: blur(4px);
+  filter: blur(6px);
   transform: scale(0.97);
-  transition: filter 0.8s ease-out, transform 0.8s ease-out;
+  transition: filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   box-shadow: 0 32px 64px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.03);
+  will-change: filter, transform;
 }
 
 .hero-image-container.revealed {
@@ -592,7 +597,6 @@ body {
 
 /* Trust circle animation */
 .trust-item { position: relative; }
-/* trust circles removed */
 
 /* ===== SECTIONS ===== */
 .section { padding: 100px 32px; }
@@ -827,6 +831,12 @@ body {
   position: relative;
   z-index: 1;
   box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  animation: aboutFloat 5s ease-in-out infinite;
+}
+
+@keyframes aboutFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .about-image img {
@@ -866,62 +876,36 @@ body {
   border: 1px solid rgba(0,0,0,0.04);
 }
 
-/* ===== FLOATING GLASS USP CARDS ===== */
-.usp-float {
+/* ===== ABOUT SECTION GLOW ===== */
+#ueber {
+  position: relative;
+  overflow: hidden;
+}
+
+#ueber::before {
+  content: '';
   position: absolute;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -0.1px;
-  white-space: nowrap;
-  animation: uspFloat 4s ease-in-out infinite;
+  top: -40%;
+  right: -10%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 226, 28, 0.06) 35%,
+    rgba(255, 226, 28, 0.10) 50%,
+    rgba(255, 226, 28, 0.06) 65%,
+    transparent 100%
+  );
+  transform: skewX(-8deg);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.usp-float-icon {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  background: rgba(255, 226, 28, 0.2);
-  border: 1px solid rgba(255, 226, 28, 0.35);
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
+#ueber > * {
+  position: relative;
+  z-index: 1;
 }
-
-.usp-float-1 {
-  top: 12%;
-  left: -16px;
-  animation-delay: 0s;
-}
-
-.usp-float-2 {
-  bottom: 22%;
-  left: -10px;
-  animation-delay: 1.3s;
-}
-
-.usp-float-3 {
-  bottom: -12px;
-  right: -16px;
-  animation-delay: 2.6s;
-}
-
-@keyframes uspFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
 }
 
 .afc-number {
@@ -1324,6 +1308,198 @@ body {
 
 .cta-contact-item svg { color: var(--yellow); width: 15px; height: 15px; }
 
+/* ===== CTA TOGGLE ===== */
+.cta-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 32px;
+}
+
+.cta-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-toggle-btn.active {
+  background: var(--white);
+  color: var(--dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cta-toggle-btn:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+.cta-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* CTA Options */
+.cta-option {
+  animation: ctaFadeIn 0.35s ease;
+}
+
+.cta-option-hidden {
+  display: none;
+}
+
+.cta-option-hint {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@keyframes ctaFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== CONTACT FORM ===== */
+.contact-form {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--r);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 226, 28, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-privacy input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin-top: 2px;
+  accent-color: var(--yellow);
+  cursor: pointer;
+}
+
+.form-privacy label {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.form-privacy label a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+}
+
+/* Success State */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 24px 0;
+  animation: ctaFadeIn 0.5s ease;
+}
+
+.form-success.visible {
+  display: block;
+}
+
+.form-success-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--yellow);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.form-success-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.form-success-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
+  .cta-toggle-btn { padding: 10px 16px; font-size: 13px; }
+}
+
 /* ===== FOOTER ===== */
 .footer {
   background: var(--dark);
@@ -1441,20 +1617,7 @@ body {
     display: inline-flex;
   }
 
-  .usp-float {
-    font-size: 11px;
-    padding: 8px 12px;
-    gap: 7px;
-  }
-  .usp-float-icon {
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    font-size: 11px;
-  }
-  .usp-float-1 { top: 8%; left: -8px; }
-  .usp-float-2 { bottom: 20%; left: -6px; }
-  .usp-float-3 { bottom: -8px; right: -8px; }
+
 
   .trust-bar { gap: 24px; padding: 36px 20px; }
   .trust-divider { display: none; }
@@ -1628,7 +1791,7 @@ body {
   <canvas id="particles"></canvas>
   <div class="hero-content">
     <div class="hero-badge">Bau &amp; Solar in Aalen</div>
-    <h1>Wir sanieren Ihr Zuhause und machen es fit für die <span class="gradient-text">nächsten Jahrzehnte.</span></h1>
+    <h1>Wir sanieren Ihr Zuhause und machen es fit für die <span class="gradient-text">Zukunft.</span></h1>
     <p class="hero-sub">Ob Dachsanierung, Photovoltaik oder Gartengestaltung: Bei uns bekommen Sie alles aus einer Hand.</p>
     <div class="hero-cta-group">
       <a href="#kontakt" class="btn-main">
@@ -1646,7 +1809,7 @@ body {
     <div class="hero-image-container" id="heroImage">
       <img src="images/bild-04.jpg" alt="Einfamilienhaus mit Solaranlage und Garten">
       <div class="hero-image-overlay"></div>
-      <div class="hero-image-tag">Alles rund um’s Haus aus einer Hand</div>
+      <div class="hero-image-tag">Dach, Solar &amp; Garten von einem Team</div>
     </div>
   </div>
 </section>
@@ -1678,13 +1841,13 @@ body {
   <div class="services-header reveal">
     <div class="section-label">Unsere Leistungen</div>
     <h2 class="section-title">Drei Gewerke. <span class="marker-highlight">Ein Betrieb.</span></h2>
-    <p class="section-desc">Sie müssen nicht drei verschiedene Firmen koordinieren und hoffen, dass am Ende alles zusammenpasst. Bei uns kommen Dach, Strom und Garten aus einem Betrieb.</p>
+    <p class="section-desc">Sie müssen nicht drei verschiedene Firmen koordinieren und hoffen, dass am Ende alles zusammenpasst. Bei uns kommen Dach, Strom und Garten aus einer Hand.</p>
   </div>
   <div class="services-grid">
     <div class="service-card reveal">
       <div class="service-icon">🏠</div>
       <h3>Dacharbeiten</h3>
-      <p>Ob Ihr Dach undicht ist, die Fassade in die Jahre gekommen ist oder ein größerer Umbau ansteht: Wir bringen Ihr Haus wieder in Schuss. Sauber geplant, im vereinbarten Zeitrahmen umgesetzt und ohne Überraschungen auf der Rechnung.</p>
+      <p>Ob Ihr Dach undicht ist, die Fassade in die Jahre gekommen ist oder ein größerer Umbau ansteht: Wir bringen Ihr Haus wieder in Schuss. Sauber geplant, im vereinbarten Zeitrahmen umgesetzt und zu dem Preis, den wir Ihnen vorher nennen.</p>
       <a href="#kontakt" class="service-link">
         Beratung anfragen
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1728,25 +1891,14 @@ body {
       <div class="about-image" style="aspect-ratio: 3/4;">
         <img src="images/bild-05.webp" alt="Gert Horlbeck auf dem Dach" loading="lazy" style="object-position: center 20%;">
       </div>
-      <div class="usp-float usp-float-1">
-        <div class="usp-float-icon">👷</div>
-        Eigene Mitarbeiter
-      </div>
-      <div class="usp-float usp-float-2">
-        <div class="usp-float-icon">📞</div>
-        Persönlicher Ansprechpartner
-      </div>
-      <div class="usp-float usp-float-3">
-        <div class="usp-float-icon">✓</div>
-        Festpreise ohne Überraschungen
-      </div>
+
       </div>
     </div>
     <div class="about-content reveal">
       <div class="section-label">Über den Inhaber</div>
       <h2 class="section-title" style="margin-bottom: 28px;">Ihr Ansprechpartner von Anfang bis Ende.</h2>
       <p class="section-desc" style="max-width: 100%; margin-bottom: 28px;">Ich bin Gert Horlbeck und ich leite diesen Betrieb mit einem ganz einfachen Grundsatz: Ich möchte, dass Sie sich während der gesamten Zusammenarbeit wohlfühlen. Dass Sie wissen, was passiert, was es kostet und dass Sie jemanden erreichen, der Ihnen weiterhilft.</p>
-      <p class="section-desc" style="max-width: 100%; margin-bottom: 28px;">Unser Team besteht aus eigenen Mitarbeitern, die eingespielt sind und sauber arbeiten. Und ich persönlich bin Ihr Ansprechpartner vom ersten Gespräch bis zur Abnahme.</p>
+      <p class="section-desc" style="max-width: 100%; margin-bottom: 28px;">Wir arbeiten mit einem festen Team, das sich seit Jahren kennt und aufeinander abgestimmt ist. Und ich persönlich bin Ihr Ansprechpartner vom ersten Gespräch bis zur Abnahme.</p>
       <div style="text-align: left;"><p class="section-desc" style="max-width: 100%; font-weight: 600; color: var(--dark); margin-bottom: 8px; text-align: left;">Ihr Gert Horlbeck</p>
       <img src="images/bild-06.png" alt="Unterschrift G. Horlbeck" loading="lazy" style="height: 52px; width: auto; opacity: 0.85; margin-top: 4px; display: block; margin-left: -16px;">
     </div></div>
@@ -1759,7 +1911,7 @@ body {
   <div class="process-header reveal">
     <div class="section-label">In 4 Schritten</div>
     <h2 class="section-title">So wird aus <span class="gradient-text">Ihrer Idee</span> ein fertiges Projekt.</h2>
-    <p class="section-desc">Sie wissen bei uns von Anfang an, wo Ihr Projekt gerade steht. Klarer Ablauf, feste Termine und keine unangenehmen Überraschungen zwischendurch.</p>
+    <p class="section-desc">Sie wissen bei uns jederzeit, wo Ihr Projekt gerade steht. Klarer Ablauf, feste Termine und volle Transparenz von der ersten Idee bis zur Fertigstellung.</p>
   </div>
   <div class="process-steps">
     <div class="process-step reveal">
@@ -1959,15 +2111,69 @@ body {
   <div class="cta-card reveal">
     <div class="section-label" style="justify-content: center;">Jetzt loslegen</div>
     <h2 class="section-title cta-title">Lassen Sie uns über <span class="marker-highlight">Ihr Projekt</span> sprechen.</h2>
-    <p class="section-desc">Ein kurzes Gespräch reicht, damit wir Ihnen sagen können, was bei Ihrem Projekt realistisch ist, was es kostet und wie der Zeitplan aussieht. Wir freuen uns, Sie kennenzulernen!</p>
-    <a href="tel:+497361669126" class="btn-main" style="display: inline-flex;">
-      Jetzt anrufen
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    </a>
+    <p class="section-desc">Ein kurzes Gespräch reicht, damit wir Ihnen sagen können, was realistisch ist, was es kostet und wie der Zeitplan aussieht. Wir freuen uns, Sie kennenzulernen!</p>
+
+    <!-- Toggle Buttons -->
+    <div class="cta-toggle">
+      <button class="cta-toggle-btn active" id="toggleCall" onclick="showCtaOption('call')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Anrufen
+      </button>
+      <button class="cta-toggle-btn" id="toggleForm" onclick="showCtaOption('form')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Nachricht schreiben
+      </button>
+    </div>
+
+    <!-- Option 1: Anrufen -->
+    <div class="cta-option" id="ctaCall">
+      <a href="tel:+49736166912" class="btn-main" style="display: inline-flex; margin-bottom: 10px;">
+        Jetzt anrufen: 07361 66912
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <p class="cta-option-hint">Für alle, die es unkompliziert mögen.</p>
+    </div>
+
+    <!-- Option 2: Formular -->
+    <div class="cta-option cta-option-hidden" id="ctaForm">
+      <form action="https://formspree.io/f/IHRE_ID" method="POST" class="contact-form" id="contactForm">
+        <!-- Honeypot -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Ihr Name</label>
+            <input type="text" id="name" name="name" required placeholder="z.B. Max Mustermann">
+          </div>
+          <div class="form-group">
+            <label for="contact">Telefon oder E-Mail</label>
+            <input type="text" id="contact" name="contact" required placeholder="Wie erreichen wir Sie?">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Was haben Sie vor?</label>
+          <textarea id="message" name="message" rows="3" placeholder="z.B. Dachsanierung am Einfamilienhaus, Solaranlage fürs Dach, Gartengestaltung ..."></textarea>
+        </div>
+        <div class="form-privacy">
+          <input type="checkbox" id="privacy" name="privacy" required>
+          <label for="privacy">Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerkl&#228;rung</a> gelesen und stimme der Kontaktaufnahme durch Horlbeck Bau- und Solarservice zu.</label>
+        </div>
+        <button type="submit" class="btn-main" style="width: 100%; justify-content: center;">
+          Nachricht senden
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </form>
+      <!-- Success Message -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">&#10003;</div>
+        <p class="form-success-title">Nachricht gesendet!</p>
+        <p class="form-success-text">Vielen Dank für Ihre Anfrage. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+      </div>
+    </div>
+
     <div class="cta-contact">
       <div class="cta-contact-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        07361 66912
+        <a href="tel:+49736166912" style="color: inherit; text-decoration: none;">07361 66912</a>
       </div>
       <div class="cta-contact-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -2005,7 +2211,7 @@ body {
     </div>
     <div class="footer-col">
       <h4>Kontakt</h4>
-      <a href="tel:+497361669126">07361 66912</a>
+      <a href="tel:+49736166912">07361 66912</a>
       <a href="mailto:horlbeck-bau@t-online.de">E-Mail schreiben</a>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
@@ -2091,20 +2297,23 @@ const heroImg = document.getElementById('heroImage');
 const heroWrapper = heroImg.closest('.hero-image-wrapper');
 const heroInnerImg = heroImg.querySelector('img');
 
-// Blur-to-sharp on initial reveal
-const heroObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const r = e.intersectionRatio;
-      const blur = Math.max(0, 4 - r * 6);
-      const scale = 0.97 + r * 0.03;
-      heroImg.style.filter = `blur(${blur}px)`;
-      heroImg.style.transform = `scale(${scale})`;
-      if (r > 0.5) heroImg.classList.add('revealed');
-    }
-  });
-}, { threshold: Array.from({length: 20}, (_, i) => i / 20) });
-heroObs.observe(heroImg);
+// Delay reveal so browser renders blur state first
+let heroRevealed = false;
+function checkHeroReveal() {
+  if (heroRevealed) return;
+  const rect = heroImg.getBoundingClientRect();
+  const winH = window.innerHeight;
+  if (rect.top < winH * 0.85) {
+    heroRevealed = true;
+    heroImg.classList.add('revealed');
+  }
+}
+// Wait for first paint, then start checking
+setTimeout(function() {
+  window.addEventListener('scroll', checkHeroReveal, { passive: true });
+  // Also check once after delay in case already in view
+  setTimeout(checkHeroReveal, 300);
+}, 100);
 
 // Parallax: image moves slower than scroll
 let paraTicking = false;
@@ -2221,14 +2430,55 @@ if (aboutCanvas) {
   window.addEventListener('resize', () => { resizeAboutCanvas(); createAboutParticles(); });
 }
 
-
-// trust circles removed
-
 // ===== CTA SOLAR OVERLAY =====
 const ctaSolarBg = document.getElementById('ctaSolarBg');
 const heroSolarEl = document.getElementById('solarOverlay');
 if (ctaSolarBg && heroSolarEl) {
   ctaSolarBg.style.backgroundImage = heroSolarEl.style.backgroundImage || '';
+}
+
+// ===== CTA TOGGLE =====
+function showCtaOption(option) {
+  var callEl = document.getElementById('ctaCall');
+  var formEl = document.getElementById('ctaForm');
+  var toggleCall = document.getElementById('toggleCall');
+  var toggleForm = document.getElementById('toggleForm');
+
+  if (option === 'call') {
+    callEl.classList.remove('cta-option-hidden');
+    formEl.classList.add('cta-option-hidden');
+    toggleCall.classList.add('active');
+    toggleForm.classList.remove('active');
+  } else {
+    callEl.classList.add('cta-option-hidden');
+    formEl.classList.remove('cta-option-hidden');
+    toggleCall.classList.remove('active');
+    toggleForm.classList.add('active');
+  }
+}
+
+// ===== FORM SUBMISSION =====
+var contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var data = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response) {
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      }
+    }).catch(function() {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').classList.add('visible');
+    });
+  });
 }
 
 // ===== SMOOTH SCROLL =====

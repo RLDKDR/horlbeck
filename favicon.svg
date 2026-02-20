@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <!-- Weißer Hintergrund -->
+  <rect width="600" height="600" fill="#FFFFFF"/>
+  <!-- Gelbes Rechteck mit Dach-Ausschnitt (Giebel) -->
+  <path d="M60,30 H540 V310 L300,165 L60,310 Z" fill="#FFE21C"/>
+  <!-- Text HORLBECK -->
+  <text x="300" y="420" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="88" fill="#111111" letter-spacing="2">HORLBECK</text>
+  <text x="300" y="478" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="400" font-size="38" fill="#111111" letter-spacing="1.5">Bau- und Solarservice</text>
+</svg>
