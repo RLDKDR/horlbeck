@@ -1583,7 +1583,8 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(32px);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.15, 1);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.15, 1), transform 0.7s cubic-bezier(0.4, 0, 0.15, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
@@ -2325,8 +2326,8 @@ function checkHeroReveal() {
 setTimeout(function() {
   window.addEventListener('scroll', checkHeroReveal, { passive: true });
   // Also check once after delay in case already in view
-  setTimeout(checkHeroReveal, 300);
-}, 100);
+  setTimeout(checkHeroReveal, 800);
+}, 200);
 
 // Parallax: image moves slower than scroll
 let paraTicking = false;
@@ -2593,7 +2594,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="lenis_min.js"></script>
 <script>
 const lenis = new Lenis({
-  lerp: 0.1,
+  lerp: 0.08,
   smoothWheel: true,
   syncTouch: false,
   touchMultiplier: 0
