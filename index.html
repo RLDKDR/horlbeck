@@ -115,7 +115,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: auto; overflow-x: hidden; overscroll-behavior-y: none; }
+html { scroll-behavior: auto; overflow-x: hidden; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -2593,17 +2593,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script src="lenis.min.js"></script>
 <script>
-const lenis = new Lenis({
-  lerp: 0.1,
-  smoothWheel: true
-});
-
-function raf(time) {
-  lenis.raf(time);
+if (window.matchMedia('(pointer: fine)').matches) {
+  const lenis = new Lenis({
+    lerp: 0.1,
+    smoothWheel: true
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
   requestAnimationFrame(raf);
 }
-
-requestAnimationFrame(raf);
 </script>
 </body>
 </html>
