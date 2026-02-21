@@ -2593,17 +2593,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script src="lenis.min.js"></script>
 <script>
-if (window.matchMedia('(pointer: fine)').matches) {
-  const lenis = new Lenis({
-    lerp: 0.1,
-    smoothWheel: true
-  });
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
+const lenis = new Lenis({
+  lerp: 0.1,
+  smoothWheel: true
+});
+
+function raf(time) {
+  lenis.raf(time);
   requestAnimationFrame(raf);
 }
+
+requestAnimationFrame(raf);
 </script>
 </body>
 </html>
