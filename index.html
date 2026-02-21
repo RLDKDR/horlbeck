@@ -1593,10 +1593,10 @@ body {
 
 /* Scroll progress */
 /* Hide mobile-only elements on desktop */
-.swipe-hint { display: none; color: #000000 !important; font-weight: 800; }
+.swipe-hint { display: none; color: #1A1A1A !important; font-weight: 800; }
 .testimonial-dots { display: none; }
-.testimonial-dot { background: #444444 !important; }
-.testimonial-dot.active { background: #FFD700 !important; box-shadow: 0 0 12px rgba(255, 215, 0, 0.8); }
+.testimonial-dot { background: #333333 !important; }
+.testimonial-dot.active { background: #FFD700 !important; box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
@@ -1701,32 +1701,19 @@ body {
     display: flex !important;
     justify-content: center;
     gap: 10px;
-    padding: 8px 0 4px;
-    transition: opacity 0.5s, transform 0.5s;
-    opacity: 0;
-    transform: translateY(10px);
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  .testimonial-dots.visible {
-    opacity: 1;
-    transform: translateY(0);
-    height: auto;
-    padding: 8px 0 4px;
-    overflow: visible;
+    padding: 12px 0 8px;
   }
   .testimonial-dot {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: #444444 !important;
-    transition: all 0.3s;
+    background: #333333 !important;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
   }
   .testimonial-dot.active {
     background: #FFD700 !important;
-    transform: scale(1.4);
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
   }
 
   /* Process steps: compact on mobile */
@@ -1736,7 +1723,8 @@ body {
   .process-step h3 { font-size: 15px; margin-bottom: 6px; }
   .process-step p { font-size: 13px; }
 
-  .cta-card { padding: 48px 24px; }
+  .cta-card { padding: 48px 24px; background: rgba(250, 250, 250, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 12px; margin: 0 4px; }
+  .cta-section { padding-left: 12px; padding-right: 12px; }
   .cta-contact { gap: 12px; flex-direction: column; align-items: center; }
   .cta-contact-item { white-space: nowrap; }
 
@@ -1765,7 +1753,7 @@ body {
   .section-title { font-size: 23px; }
   .section-desc { font-size: 14px; }
   .service-card { padding: 28px 20px; }
-  .cta-card { padding: 36px 16px; }
+  .cta-card { padding: 36px 16px; border-radius: 12px; }
   .nav { width: calc(100% - 16px); }
   .nav.scrolled { width: calc(100% - 24px); padding: 8px 12px; }
   .trust-bar { padding: 28px 16px; }
@@ -2110,11 +2098,11 @@ body {
     @keyframes swipeArrowMove { 0%,100%{transform:translateX(0)} 50%{transform:translateX(8px)} }
     #swipeHint svg { animation: swipeArrowMove 1.2s ease-in-out infinite; }
   </style>
-  <div id="swipeHint" style="display:none; align-items:center; justify-content:center; gap:8px; padding:8px 0 4px; color:#000000; font-size:15px; font-weight:800; font-family:'Inter',sans-serif;">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  <div id="swipeHint" style="display:none; align-items:center; justify-content:center; gap:8px; padding:12px 0 8px; color:#1A1A1A; font-size:14px; font-weight:700; font-family:'Inter',sans-serif;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     Swipen
   </div>
-  <div id="testimonialDots" style="display:none; justify-content:center; gap:10px; padding:8px 0 4px;"></div>
+  <div id="testimonialDots" style="display:none; justify-content:center; align-items:center; gap:10px; padding:12px 0 8px;"></div>
 </section>
 
 <noscript><style>.swipe-hint{display:none!important}</style></noscript>
@@ -2518,43 +2506,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (!cards.length || !hint || !dotsContainer) return;
 
-  // Show hint
+  // Show hint initially
   hint.style.display = 'flex';
 
-  // Build dots
+  // Build dots with CSS classes instead of inline styles
+  dotsContainer.classList.add('testimonial-dots');
   for (var i = 0; i < cards.length; i++) {
     var dot = document.createElement('div');
-    dot.style.width = '12px';
-    dot.style.height = '12px';
-    dot.style.borderRadius = '50%';
-    dot.style.display = 'inline-block';
-    dot.style.transition = 'all 0.3s';
-    if (i === 0) {
-      dot.style.background = '#FFD700';
-      dot.style.transform = 'scale(1.4)';
-      dot.style.boxShadow = '0 0 12px rgba(255,215,0,0.8)';
-      dot.setAttribute('data-active', 'true');
-    } else {
-      dot.style.background = '#555555';
-      dot.setAttribute('data-active', 'false');
-    }
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
     dotsContainer.appendChild(dot);
   }
 
-  var dots = dotsContainer.children;
+  var dots = dotsContainer.querySelectorAll('.testimonial-dot');
   var switched = false;
-  var startIndex = 0;
 
   function updateDots(idx) {
     for (var j = 0; j < dots.length; j++) {
       if (j === idx) {
-        dots[j].style.background = '#FFD700';
-        dots[j].style.transform = 'scale(1.4)';
-        dots[j].style.boxShadow = '0 0 12px rgba(255,215,0,0.8)';
+        dots[j].classList.add('active');
       } else {
-        dots[j].style.background = '#555555';
-        dots[j].style.transform = 'scale(1)';
-        dots[j].style.boxShadow = 'none';
+        dots[j].classList.remove('active');
       }
     }
   }
@@ -2568,14 +2539,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateDots(idx);
 
-    if (!switched && idx !== startIndex) {
+    if (!switched && idx !== 0) {
       switched = true;
+      hint.style.transition = 'opacity 0.3s';
       hint.style.opacity = '0';
-      hint.style.transition = 'opacity 0.4s';
+      dotsContainer.style.display = 'flex';
+      dotsContainer.style.opacity = '0';
+      dotsContainer.style.transition = 'opacity 0.3s';
+      requestAnimationFrame(function() {
+        dotsContainer.style.opacity = '1';
+      });
       setTimeout(function() {
         hint.style.display = 'none';
-        dotsContainer.style.display = 'flex';
-      }, 400);
+      }, 300);
     }
   }
 
