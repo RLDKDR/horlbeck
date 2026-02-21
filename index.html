@@ -442,6 +442,28 @@ body {
 .btn-main svg { transition: transform 0.2s; }
 .btn-main:hover svg { transform: translateX(3px); }
 
+/* Subtle shine effect for hero CTA */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.12) 50%, transparent 65%);
+  animation: btnShine 8s ease-in-out 3s infinite;
+  pointer-events: none;
+}
+@keyframes btnShine {
+  0% { left: -100%; }
+  10% { left: 120%; }
+  100% { left: 120%; }
+}
+
 /* Google Reviews Badge */
 .google-badge {
   display: inline-flex;
@@ -491,8 +513,8 @@ body {
   overflow: hidden;
   aspect-ratio: 16 / 9.5;
   position: relative;
-  filter: blur(6px);
-  transform: scale(0.97);
+  filter: blur(3px);
+  transform: scale(0.98);
   transition: filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   box-shadow: 0 32px 64px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.03);
   will-change: filter, transform;
@@ -1781,7 +1803,7 @@ body {
     <h1>Wir sanieren Ihr Zuhause und machen es fit für die <span class="gradient-text">Zukunft.</span></h1>
     <p class="hero-sub">Ob Dachsanierung, Photovoltaik oder Gartengestaltung: Bei uns bekommen Sie alles aus einer Hand.</p>
     <div class="hero-cta-group">
-      <a href="#kontakt" class="btn-main">
+      <a href="#kontakt" class="btn-main btn-shine">
         Projekt anfragen
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
@@ -2118,7 +2140,7 @@ body {
 
     <!-- Option 1: Anrufen -->
     <div class="cta-option" id="ctaCall">
-      <a href="tel:+49736166912" class="btn-main" style="display: inline-flex; margin-bottom: 10px;">
+      <a href="tel:+49736166912" class="btn-main btn-shine" style="display: inline-flex; margin-bottom: 10px;">
         Jetzt anrufen: 07361 66912
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
@@ -2496,11 +2518,11 @@ document.addEventListener('DOMContentLoaded', function() {
     dot.style.borderRadius = '50%';
     dot.style.display = 'inline-block';
     if (i === 0) {
-      dot.style.backgroundColor = 'rgb(255, 215, 0)';
+      dot.style.backgroundColor = 'rgb(255, 226, 28)';
       dot.style.transform = 'scale(1.3)';
-      dot.style.boxShadow = '0 0 8px rgba(255,215,0,0.6)';
+      dot.style.boxShadow = '0 0 8px rgba(255,226,28,0.6)';
     } else {
-      dot.style.backgroundColor = 'rgb(34, 34, 34)';
+      dot.style.backgroundColor = 'rgb(140, 140, 140)';
     }
     dotsContainer.appendChild(dot);
   }
@@ -2511,11 +2533,11 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateDots(idx) {
     for (var j = 0; j < dots.length; j++) {
       if (j === idx) {
-        dots[j].style.backgroundColor = 'rgb(255, 215, 0)';
+        dots[j].style.backgroundColor = 'rgb(255, 226, 28)';
         dots[j].style.transform = 'scale(1.3)';
-        dots[j].style.boxShadow = '0 0 8px rgba(255,215,0,0.6)';
+        dots[j].style.boxShadow = '0 0 8px rgba(255,226,28,0.6)';
       } else {
-        dots[j].style.backgroundColor = 'rgb(34, 34, 34)';
+        dots[j].style.backgroundColor = 'rgb(140, 140, 140)';
         dots[j].style.transform = 'scale(1)';
         dots[j].style.boxShadow = 'none';
       }
