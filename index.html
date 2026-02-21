@@ -2559,6 +2559,26 @@ document.addEventListener('DOMContentLoaded', function() {
   track.addEventListener('touchmove', onScroll, { passive: true });
 });
 
+// ===== BLOCK BOTTOM OVERSCROLL (allow top for pull-to-refresh) =====
+(function() {
+  var lastY = 0;
+  document.addEventListener('touchstart', function(e) {
+    lastY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    var currentY = e.touches[0].clientY;
+    var scrollTop = window.scrollY;
+    var scrollHeight = document.documentElement.scrollHeight;
+    var clientHeight = window.innerHeight;
+    var atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    var swipingUp = currentY < lastY;
+    if (atBottom && swipingUp) {
+      e.preventDefault();
+    }
+    lastY = currentY;
+  }, { passive: false });
+})();
+
 </script>
 
 </body>
