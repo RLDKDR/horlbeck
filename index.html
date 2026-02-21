@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="address=no">
 <title>Horlbeck Bau- und Solarservice | Dachsanierung, Photovoltaik & Garten in Aalen</title>
 <meta name="description" content="Ihr Handwerksbetrieb in Aalen für Dachsanierung, Photovoltaik, Gartengestaltung und mehr. Eigene Mitarbeiter, feste Preise, ein Ansprechpartner. Jetzt kostenlos beraten lassen.">
 <meta name="keywords" content="Dachsanierung Aalen, Photovoltaik Aalen, Gartengestaltung Ostalb, Bausanierung Aalen, Solaranlage Aalen, Dachdecker Aalen, Horlbeck">
@@ -181,14 +182,14 @@ body {
   font-size: 16px;
   font-weight: 800;
   color: var(--dark);
-  letter-spacing: -0.3px;
+  letter-spacing: 1px;
 }
 
 .nav-logo-text span {
   font-size: 11px;
   font-weight: 500;
   color: var(--text-muted);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .nav-links {
@@ -1132,6 +1133,20 @@ body {
   min-width: 380px;
   max-width: 420px;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--yellow);
+  border-radius: var(--r) 0 0 var(--r);
+  pointer-events: none;
 }
 
 .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.05); }
@@ -1162,7 +1177,7 @@ body {
   width: 38px;
   height: 38px;
   border-radius: var(--r);
-  background: linear-gradient(135deg, var(--yellow), #d4be00);
+  background: var(--yellow);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2578,4 +2593,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script src="lenis.min.js"></script>
 <script>
-co
+const lenis = new Lenis({
+  lerp: 0.1,
+  smoothWheel: true
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+</script>
+</body>
+</html>
