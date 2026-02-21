@@ -137,7 +137,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0.5s cubic-bezier(0.4, 0, 0.2, 1), top 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   max-width: 1200px;
   left: 50%;
   transform: translateX(-50%);
@@ -216,7 +216,7 @@ body {
   border-radius: var(--r) !important;
   font-weight: 700 !important;
   font-size: 13px !important;
-  transition: all 0.3s !important;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s !important;
   letter-spacing: 0.1px;
 }
 
@@ -242,7 +242,7 @@ body {
   height: 2px;
   background: var(--dark);
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
   display: block;
 }
 
@@ -427,7 +427,7 @@ body {
   border-radius: var(--r);
   font-weight: 700;
   font-size: 15px;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   border: none;
   cursor: pointer;
   letter-spacing: -0.2px;
@@ -492,23 +492,22 @@ body {
   aspect-ratio: 16 / 9.5;
   position: relative;
   filter: blur(6px);
-  transform: scale(0.97);
+  transform: scale(0.97) translateZ(0);
   transition: filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   box-shadow: 0 32px 64px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.03);
-  will-change: filter, transform;
 }
 
 .hero-image-container.revealed {
   filter: blur(0px);
-  transform: scale(1);
+  transform: scale(1) translateZ(0);
+  will-change: auto;
 }
 
 .hero-image-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.08);
-  will-change: transform;
+  transform: scale(1.08) translateZ(0);
 }
 
 .hero-image-overlay {
@@ -661,7 +660,7 @@ body {
   border-radius: var(--r);
   padding: 40px 32px;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -1027,7 +1026,7 @@ body {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: var(--r);
-  transition: all 0.3s;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
   position: relative;
 }
 
@@ -1042,7 +1041,7 @@ body {
   height: 36px;
   margin-bottom: 16px;
   opacity: 0.35;
-  transition: all 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
   color: var(--yellow);
 }
 
@@ -1129,7 +1128,7 @@ body {
   border-radius: var(--r);
   padding: 36px 28px;
   border: 1px solid rgba(0,0,0,0.04);
-  transition: all 0.3s;
+  transition: box-shadow 0.3s;
   min-width: 380px;
   max-width: 420px;
   flex-shrink: 0;
@@ -1346,7 +1345,7 @@ body {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cta-toggle-btn.active {
@@ -1582,13 +1581,13 @@ body {
 
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.15, 1);
+  transform: translateY(32px) translateZ(0);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.15, 1), transform 0.7s cubic-bezier(0.4, 0, 0.15, 1);
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
 }
 
 /* Scroll progress */
@@ -1721,7 +1720,7 @@ body {
     height: 12px;
     border-radius: 50%;
     background: #444444 !important;
-    transition: all 0.3s;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
   }
   .testimonial-dot.active {
     background: #FFD700 !important;
@@ -2251,6 +2250,7 @@ body {
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particles = [];
+let heroParticlesVisible = true;
 
 function resizeCanvas() {
   const hero = canvas.parentElement;
@@ -2275,6 +2275,10 @@ function createParticles() {
 }
 
 function animateParticles() {
+  if (!heroParticlesVisible) {
+    requestAnimationFrame(animateParticles);
+    return;
+  }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
     p.x += p.speedX;
@@ -2293,6 +2297,11 @@ function animateParticles() {
   });
   requestAnimationFrame(animateParticles);
 }
+
+const heroParticleObs = new IntersectionObserver(entries => {
+  heroParticlesVisible = entries[0].isIntersecting;
+}, { threshold: 0 });
+heroParticleObs.observe(canvas.parentElement);
 
 resizeCanvas();
 createParticles();
@@ -2323,7 +2332,6 @@ window.addEventListener('scroll', checkHeroReveal, { passive: true });
 
 // Parallax: image moves slower than scroll
 let paraTicking = false;
-heroInnerImg.style.transition = 'transform 0.15s linear';
 window.addEventListener('scroll', () => {
   if (!paraTicking) {
     requestAnimationFrame(() => {
@@ -2332,7 +2340,7 @@ window.addEventListener('scroll', () => {
       if (rect.bottom > 0 && rect.top < winH) {
         const progress = (winH - rect.top) / (winH + rect.height);
         const shift = (progress - 0.5) * 60;
-        heroInnerImg.style.transform = `translateY(${shift}px) scale(1.08)`;
+        heroInnerImg.style.transform = `translateY(${shift}px) scale(1.08) translateZ(0)`;
       }
       paraTicking = false;
     });
@@ -2386,6 +2394,7 @@ const aboutCanvas = document.getElementById('aboutParticles');
 if (aboutCanvas) {
   const actx = aboutCanvas.getContext('2d');
   let aboutPs = [];
+  let aboutParticlesVisible = false;
 
   function resizeAboutCanvas() {
     const container = aboutCanvas.parentElement;
@@ -2409,6 +2418,10 @@ if (aboutCanvas) {
   }
 
   function animateAboutParticles() {
+    if (!aboutParticlesVisible) {
+      requestAnimationFrame(animateAboutParticles);
+      return;
+    }
     actx.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
     aboutPs.forEach(p => {
       p.x += p.speedX;
@@ -2420,16 +2433,20 @@ if (aboutCanvas) {
       if (p.y < 0) p.y = aboutCanvas.height;
       if (p.y > aboutCanvas.height) p.y = 0;
       actx.beginPath();
-      actx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      actx.fillStyle = `rgba(255, 226, 28, ${op})`;
-      actx.fill();
-      actx.beginPath();
-      actx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2);
-      actx.fillStyle = `rgba(255, 226, 28, ${op * 0.2})`;
+      actx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+      const grad = actx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.5);
+      grad.addColorStop(0, `rgba(255, 226, 28, ${op})`);
+      grad.addColorStop(1, `rgba(255, 226, 28, 0)`);
+      actx.fillStyle = grad;
       actx.fill();
     });
     requestAnimationFrame(animateAboutParticles);
   }
+
+  const aboutParticleObs = new IntersectionObserver(entries => {
+    aboutParticlesVisible = entries[0].isIntersecting;
+  }, { threshold: 0 });
+  aboutParticleObs.observe(aboutCanvas.parentElement);
 
   resizeAboutCanvas();
   createAboutParticles();
@@ -2587,7 +2604,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="lenis_min.js"></script>
 <script>
 const lenis = new Lenis({
-  lerp: 0.1,
+  lerp: 0.12,
+  duration: 1.0,
   smoothWheel: true,
   syncTouch: false,
   touchMultiplier: 0
